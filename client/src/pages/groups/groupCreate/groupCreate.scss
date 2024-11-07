@@ -19,57 +19,39 @@
     }
   }
 
-  .rtable {
-    display: inline-block;
-    vertical-align: top;
-    max-width: 100%;
-    
-    overflow-x: auto;
-    
-    white-space: nowrap;
-  
-    border-collapse: collapse;
-    border-spacing: 0;
-  }
-  
-  .rtable {
-    // optional - enable iOS momentum scrolling
-    -webkit-overflow-scrolling: touch;
-    
-    background-size: 10px 100%, 10px 100%;
-    background-attachment: scroll, scroll;
-    background-repeat: no-repeat;
-  }
-
-  .rtable th {
-    font-size: 12px;
-    text-align: left;
-    text-transform: uppercase;
-  }
-  
-  .rtable th,
-  .rtable td {
-    padding: 6px 12px;
-    text-align: center;
-    border: 1px solid #d9d7ce;
-  }
-
-  .groupsActions {
+  .form {
+    width: 40%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     gap: 10px;
-  }
+    margin-bottom: 20px;
 
-  .groupsActionsItem {
-    display: flex;
-    align-items: center;
-  }
+      label {
+        font-size: 14px;
+        color:gray;
+      }
 
-  .groupsActionsDelete {
-    color:rgb(179, 0, 0);
+      input {
+        padding: 10px;
+        background-color: transparent;
+        color: white;
+        outline: none;
+        border: 1px solid $soft-color;
+        border-radius: 3px;
+      }
+      
+      input::-webkit-input-placeholder {
+        color:rgba(96, 96, 96, 0.539);
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        cursor: pointer;
+      }
+
   }
-  .groupsActionsDelete:hover, .groupsActionsEdit:hover {
-    background-color: $soft-bg;
-  }
+  
+  
   
  

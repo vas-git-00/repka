@@ -17,15 +17,14 @@ export default function Groups() {
 
   },[])
   
-  handleClick = () =>{
-    <NavLink to={'/groups/new'}/>
-  }
- 
+   
   return (
     <div className="groups">
       <div className="groupsInfo">
         <h1>Группы</h1>
-        <button onClick={handleClick}>Добавить</button>
+          <button>
+            <NavLink to={'/groups/new'}>Добавить</NavLink>
+          </button>
       </div>
       <div className='groupsTableContainer'>
         <table className="rtable">

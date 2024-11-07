@@ -39,6 +39,19 @@ const useGroupStore = create(
           } else {
               console.error('Ошибка ', data.message)
           }
+      },
+
+      //Создание новой группы
+      createGroup: async (company_id, name, token) => {
+        const { data } = await axios.post('http://localhost:8800/api/group', {company_id, name}, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+
+          if ( !data ) {
+            console.error('Ошибка ', data.message)
+          } 
       }
 
     })
