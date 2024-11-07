@@ -7,6 +7,7 @@ const useGroupStore = create(
       dataGroups: [],
       dataGroup: [],
       dataUsersGroup: [],
+      dataUsersFreeForGroup: [],
 
       //Получение списка групп
       getGroups: async (token) => {
@@ -81,7 +82,7 @@ const useGroupStore = create(
           } 
       },
 
-      //Получение всех пользователей, которые находяться в группе DONT WORK!!!
+      //Получение всех пользователей, которые находяться в группе
       getUsersInGroup: async (id, token) => {
         const { data } = await axios.get(`http://localhost:8800/api/users-group/${id}`, {
           headers: {
@@ -92,6 +93,23 @@ const useGroupStore = create(
           if ( data ) {
             set({
               dataUsersGroup: data.usersGroupData
+            })
+          } else {
+              console.error('Ошибка ', data.message)
+          } 
+      },
+
+      //Получение всех пользователей, которые еще не находятся в группе
+      getUsersFreeForGroup: async (id, token) => {
+        const { data } = await axios.get(`http://localhost:8800/api/users-group/${id}/available-users`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+
+          if ( data ) {
+            set({
+              dataUsersFreeForGroup: data.usersFreeForGroupData
             })
           } else {
               console.error('Ошибка ', data.message)

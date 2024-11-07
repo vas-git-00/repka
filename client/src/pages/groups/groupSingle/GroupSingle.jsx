@@ -3,20 +3,18 @@ import './groupSingle.scss'
 import useGroupStore from '../../../store/groupStore'
 import useAuthStore from '../../../store/authStore'
 import { useParams } from 'react-router-dom'
-import useUserStore from '../../../store/userStore'
 
 export default function GroupSingle() {
   const { token } = useAuthStore()
   const { id } = useParams()
-  const { getGroup, dataGroup, addUserToGroup, getUsersInGroup, dataUsersGroup } = useGroupStore()
-  const { getUsers, dataUsers} = useUserStore()
+  const { getGroup, dataGroup, addUserToGroup, getUsersInGroup, dataUsersGroup, getUsersFreeForGroup, dataUsersFreeForGroup } = useGroupStore()
 
   const [selectedUserId, setSelectedUserId] = useState('')
   
 
   useEffect(()=>{
     getGroup(id, token)
-    getUsers(token)
+    getUsersFreeForGroup(id, token)
     getUsersInGroup(id, token)
 
   },[])
@@ -26,6 +24,7 @@ export default function GroupSingle() {
     e.preventDefault();
     addUserToGroup(selectedUserId, dataGroup.id, token)
     getUsersInGroup(id, token)
+    getUsersFreeForGroup(id, token)
     setSelectedUserId('')
   }
   
@@ -40,7 +39,7 @@ export default function GroupSingle() {
         <p>Добавить пользователя в группу</p>
         <select onChange={(e) => setSelectedUserId(e.target.value)} value={selectedUserId}>
           <option value="">Выберите пользователя</option>
-          {dataUsers.map((user) => (
+          {dataUsersFreeForGroup.map((user) => (
             <option key={user.id} value={user.id}>{user.name} {user.last_name}</option>
           ))}
         </select>

@@ -66,29 +66,44 @@ export const addUserToGroup = (req, res) => {
     const { userId, groupId } = req.body
     const companyId = req.companyId
 
-    const q = 'INSERT INTO `users_groups` (`company_id`, `user_id`, `group_id`) VALUES (?)'
-    const values = [companyId, userId, groupId]
-
-    db.query(q, [values], (err, data) => {
+    if (!userId || !groupId) {
+        return res.status(400).json({ message: 'Неверные данные' })
+      }
+    
+      // Проверка, существует ли уже запись для данного пользователя и группы
+      const q = `SELECT * FROM users_groups WHERE company_id = ? AND user_id = ? AND group_id = ?`
+    
+        db.query(q, [companyId, userId, groupId], (err, data) => {
         if (err) {
-            return res.status(500).json({message: err})
+            return res.status(500).json({ message: err }) 
+        }
+            // Если запись уже существует
+        if (data.length > 0) {
+          return res.status(200).json({ message: 'Пользователь уже добавлен в группу' });
         }
 
-        return res.status(200).json({ 
-            //userGroupData: data,
-            message: "Пользователь успешно добавлен в группу!" 
-        })
+            const q = 'INSERT INTO `users_groups` (`company_id`, `user_id`, `group_id`) VALUES (?)'
+            const values = [companyId, userId, groupId]
 
-    })   
+                db.query(q, [values], (err, data) => {
+                    if (err) {
+                        return res.status(500).json({ message: err })
+                    }
+
+                    return res.status(200).json({ 
+                        //userGroupData: data,
+                        message: "Пользователь успешно добавлен в группу!" 
+                    })
+
+                })     
+        })
 }
 
-//'SELECT * FROM `users_groups` WHERE company_id = ?'
 
 export const getUsersInGroup = (req, res) => {
     const companyId = req.companyId
     const groupId = req.params.id
 
-    //const q = `SELECT * FROM users_groups ug JOIN users u ON ug.user_id = u.id WHERE ug.company_id = ? AND ug.group_id = ?`
     const q = `SELECT * 
                 FROM users_groups ug 
                 JOIN users u ON ug.user_id = u.id 
@@ -102,6 +117,28 @@ export const getUsersInGroup = (req, res) => {
         return res.status(200).json({ 
             usersGroupData: data,
             message: "Данные со списком пользователей, добавленных в группу, успешно получены!" 
+        })
+
+    })   
+}
+
+
+export const getUsersFreeForGroup = (req, res) => {
+    const companyId = req.companyId
+    const groupId = req.params.id
+
+    const q = `SELECT * FROM users 
+                WHERE id NOT IN (
+                    SELECT user_id FROM users_groups WHERE company_id = ? AND group_id = ? )`
+
+    db.query(q, [companyId, groupId], (err, data) => {
+        if (err) {
+            return res.status(500).json({message: err})
+        }
+
+        return res.status(200).json({ 
+            usersFreeForGroupData: data,
+            message: "Данные со списком пользователей, не добавленных в группу, успешно получены!" 
         })
 
     })   
