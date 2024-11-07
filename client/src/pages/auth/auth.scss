@@ -1,0 +1,32 @@
+.authContainer {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}
+
+.form-container-auth {
+    max-width: 700px;
+    width: 100%;
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 5px;
+}
+
+.title-auth {
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.change-auth {
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.change-auth:hover {
+    color: blue;
+    cursor: pointer;
+}
