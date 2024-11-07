@@ -1,42 +1,27 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import './userSingle.scss'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
 import useAuthStore from '../../../store/authStore'
+import useUserStore from '../../../store/userStore'
 
 export default function UserSingle() {
-    const { token } = useAuthStore()
-    const { id } = useParams()
-    const [user, setUser] = useState([])
+  const { token } = useAuthStore()
+  const { getUser, dataUser } = useUserStore()
+  const { id } = useParams()
 
-    
-    const fetch = async () => {
-      try {
-          //const res = await axios.get(`https://erp.proprint.pro/test.php?id=${id}`)
-          const { data } = await axios.get(`http://localhost:8800/api/user/${id}`, {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          })
-          setUser(data.userData)
-
-      } catch (error) {
-          console.log(error)
-      }    
-    }
   
   useEffect(() => {
-    fetch()
+    getUser(id, token)
     
   }, [])
 
 
   return (
     <div className="userSingle">
-        <div className="usersInfo">
-            <h1>Страница профиля {id}</h1>
-        </div>
-        <div className='usersTableContainer'>
+      <div className="usersInfo">
+          <h1>Страница профиля {id}</h1>
+      </div>
+      <div className='usersTableContainer'>
         <table className="rtable">
           <thead>
             <tr>
@@ -48,18 +33,16 @@ export default function UserSingle() {
             </tr>
           </thead>
           <tbody>
-                <tr>
-                  <td>{user.id}</td>
-                  <td>{user.company_id}</td>
-                  <td>{user.name}</td>
-                  <td>{user.last_name}</td>
-                  <td>{user.email}</td>
-                </tr>
+              <tr>
+                <td>{dataUser.id}</td>
+                <td>{dataUser.company_id}</td>
+                <td>{dataUser.name}</td>
+                <td>{dataUser.last_name}</td>
+                <td>{dataUser.email}</td>
+              </tr>
           </tbody>
         </table>
       </div>
-
-        {/* <button onClick={()=>setOpenModal(true)}>Добавить</button> */}
-      </div>
+    </div>
   )
 }

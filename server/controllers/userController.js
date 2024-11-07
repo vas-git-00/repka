@@ -2,7 +2,7 @@ import { db } from '../config/database.js'
 import bcrypt from 'bcryptjs'
 
 export const createUser = (req, res) => {
-    const { name, last_name, email, password } = req.body
+    const { name, lastName, email, password } = req.body
     const companyId = req.companyId
 
     const q = 'SELECT * FROM `users` WHERE `email` = ?'
@@ -18,8 +18,8 @@ export const createUser = (req, res) => {
             const salt = bcrypt.genSaltSync(10)
             const hashPassword = bcrypt.hashSync(password, salt)
                     
-            const q = "INSERT INTO users (`company_id`, `name`, `last_name`, `email`, `password`) VALUES (?)"
-            const values = [companyId, name, last_name, email, hashPassword]
+            const q = 'INSERT INTO `users` (`company_id`, `name`, `last_name`, `email`, `password`) VALUES (?)'
+            const values = [companyId, name, lastName, email, hashPassword]
                 db.query(q, [values], (err, data) => {
                     if (err) {
                         return res.status(500).send(err)
@@ -54,7 +54,7 @@ export const getUserById = (req, res) => {
     const companyId = req.companyId
     const userId = req.params.id
     
-    const q = `SELECT * FROM users WHERE id = ? AND company_id = ?`
+    const q = 'SELECT * FROM `users` WHERE id = ? AND company_id = ?'
     const values = [userId, companyId]
 
     db.query(q, values, (err, data) => {

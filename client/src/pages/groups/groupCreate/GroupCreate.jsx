@@ -1,7 +1,6 @@
 import './groupCreate.scss'
-import { jwtDecode } from 'jwt-decode'
-import useGroupStore from '../../../store/groupStore'
 import useAuthStore from '../../../store/authStore'
+import useGroupStore from '../../../store/groupStore'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -13,13 +12,10 @@ export default function GroupCreate() {
 
   const navigate = useNavigate()
   
-  const decoded = jwtDecode(token)
-  const company_id = decoded.company_id
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createGroup(company_id, name, token)
+    createGroup(name, token)
     setName('')
     navigate('/groups')
   }
@@ -37,7 +33,6 @@ export default function GroupCreate() {
           <button>Создать</button>
         </form>
       </div>
-  
     </div>
   )
 }

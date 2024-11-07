@@ -1,40 +1,27 @@
 import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import './users.scss'
-import AddUser from '../../../components/addModal/AddUser'
-import axios from 'axios'
 import { MdOutlineEditNote, MdDeleteOutline } from "react-icons/md"
 import  useAuthStore  from '../../../store/authStore'
+import useUserStore from '../../../store/userStore'
 
 export default function Users() {
   const { token } = useAuthStore()
-  const [openModal, setOpenModal] = useState(false)
-  const [users, setUsers] = useState([])
+  const { getUsers, dataUsers } = useUserStore()
 
-  const fetch = async () => {
-    try {
-        //const res = await axios.get("https://erp.proprint.pro/test.php")
-        const { data } = await axios.get('http://localhost:8800/api/users', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
-        setUsers(data.userData)
-    } catch (error) {
-        console.log(error)
-    }    
-}
 
-useEffect(() => {
-  fetch()
-  
-}, [])
+  useEffect(() => {
+    getUsers(token)
+    
+  }, [])
  
   return (
     <div className="users">
       <div className="usersInfo">
         <h1>Пользователи</h1>
-        <button onClick={()=>setOpenModal(true)}>Добавить</button>
+        <button>
+          <NavLink to={'/users/new'}>Добавить</NavLink>
+        </button>
       </div>
       <div className='usersTableContainer'>
         <table className="rtable">
@@ -50,7 +37,7 @@ useEffect(() => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => {
+            {dataUsers.map((user) => {
               return (
                 <tr key={user.id}>
                   <td><NavLink to={`/users/${user.id}`}>{user.id}</NavLink></td>
@@ -78,9 +65,6 @@ useEffect(() => {
           </tbody>
         </table>
       </div>
-
-      {openModal && <AddUser slug="нового пользователя" setOpenModal={setOpenModal} />}
-  
     </div>
   )
 }
