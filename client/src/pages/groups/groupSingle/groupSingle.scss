@@ -19,6 +19,14 @@
     }
   }
 
+  .groupsAddUserToGroup {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    width: 300px;
+    margin-bottom: 20px;
+  }
+
   .rtable {
     display: inline-block;
     vertical-align: top;
