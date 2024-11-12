@@ -56,17 +56,16 @@ const useGroupStore = create(
           } 
       },
 
-      //Удаление группы DONT WORK!!!
-      deleteGroup: async (id, token) => {
-        const { data } = await axios.delete(`http://localhost:8800/api/group/${id}`, {
+      //Удаление группы 
+      deleteGroup: async (groupId, token) => {
+        await axios.delete('http://localhost:8800/api/group', {
           headers: {
             Authorization: `Bearer ${token}`
+          },
+          data: {
+            groupId
           }
         })
-
-          if ( !data ) {
-            console.error('Ошибка ', data.message)
-          } 
       },
 
       //Добавление в группу пользователя
@@ -99,7 +98,21 @@ const useGroupStore = create(
           } 
       },
 
-      //Получение всех пользователей, которые еще не находятся в группе
+      //Удаление пользователя из группы
+      deleteUserFromGroup: async (userId, groupId, token) => {
+        await axios.delete('http://localhost:8800/api/users-group', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          data: {
+            userId,
+            groupId
+          }
+        })
+      },
+
+
+      //Получение всех пользователей, которые еще не находятся в группе deleteUserFromGroup
       getUsersFreeForGroup: async (id, token) => {
         const { data } = await axios.get(`http://localhost:8800/api/users-group/${id}/available-users`, {
           headers: {

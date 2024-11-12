@@ -60,7 +60,37 @@ export const getGroupById = (req, res) => {
 
 export const updateGroupById = (req, res) => {}
 
-export const deleteGroupById = (req, res) => {}
+export const deleteGroupById = (req, res) => {
+    const companyId = req.companyId
+    const { groupId } = req.body
+    
+    const q = `SELECT * FROM users_groups WHERE group_id = ? AND company_id = ?`
+        db.query(q, [groupId, companyId], (err, data) => {
+            if (err) {
+                return res.status(500).json({message: err})
+            }
+
+            if (data.length > 0) {
+            // Если есть пользователи, вернуть ошибку
+            return res.status(400).json({ message: 'Невозможно удалить группу: в ней есть пользователи' })
+            }
+
+        // Шаг 2: Удаление группы, если пользователей нет
+        const q = "DELETE FROM `groups` WHERE `id` = ? AND `company_id` = ?" //правильный синтаксис
+            db.query(q, [groupId, companyId], (err, data) => {
+                if (err) {
+                    return res.status(500).json({ message: 'jjjjj',err })
+                }
+
+                if (data.affectedRows === 0) {
+                    return res.status(404).json({ message: 'Группа не найдена' })
+                }
+
+                return res.status(200).json({ message: 'Группа успешно удалена' })
+            });
+    });
+}
+
 
 export const addUserToGroup = (req, res) => {
     const { userId, groupId } = req.body
@@ -98,6 +128,33 @@ export const addUserToGroup = (req, res) => {
                 })     
         })
 }
+
+
+export const deleteUserFromGroup = (req, res) => {
+    const { userId, groupId } = req.body    
+    const companyId = req.companyId
+
+    if (!userId || !groupId) {
+        return res.status(400).json({ message: 'Неверные данные' })
+      }
+    
+        const q = `DELETE FROM users_groups WHERE company_id = ? AND user_id = ? AND group_id = ?`
+
+            db.query(q, [companyId, userId, groupId], (err, data) => {
+                if (err) {
+                    return res.status(500).json({ message: err })
+                }
+                if (data.affectedRows === 0) {
+                    return res.status(404).json({ message: 'Пользователь не найден в указанной группе!' });
+                  }    
+
+                return res.status(200).json({ 
+                    //userGroupData: data,
+                    message: 'Пользователь успешно удален из группы!' 
+                })
+            })     
+}
+
 
 
 export const getUsersInGroup = (req, res) => {

@@ -7,15 +7,26 @@ import { NavLink } from 'react-router-dom'
 
 export default function Groups() {
   const { token } = useAuthStore()
-  const { getGroups, dataGroups } = useGroupStore()
+  const { getGroups, dataGroups, deleteGroup } = useGroupStore()
+  const [refreshkey, setRefreshKey] = useState(false)
 
 
   useEffect(()=>{
     getGroups(token)
 
-  },[])
+  },[refreshkey])
   
-   
+  const handleClickDelete = async (e) => {
+    e.preventDefault();
+    const groupId = e.currentTarget.dataset.value
+      try {
+        await deleteGroup(groupId, token)
+        setRefreshKey(!refreshkey)
+      } catch (err) {
+        console.error('Ошибка при удалении пользователя из группы:', err)
+      }
+  } 
+
   return (
     <div className="groups">
       <div className="groupsInfo">
@@ -53,7 +64,9 @@ export default function Groups() {
                       </NavLink>
                     </div>
                     <div className='groupsActionsItem'>
-                      <span className='groupsActionsDelete'><MdDeleteOutline size='18px'/></span>
+                      <span className='groupsActionsDelete' onClick={handleClickDelete} data-value={groups.id}>
+                        <MdDeleteOutline size='18px'/>
+                      </span>
                     </div>
                   </div>
                 </td>
