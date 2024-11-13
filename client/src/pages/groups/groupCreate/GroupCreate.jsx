@@ -27,11 +27,24 @@ export default function GroupCreate() {
         <h1>Создание новой группы</h1>
       </div>
       <div className='groupsTableContainer'>
-        <form className='form' onSubmit={handleSubmit}>
-          <label>Название группы</label>
-          <input type='text' placeholder='Введите название группы' value={name} onChange={(e) => (setName(e.target.value))}/>
-          <button>Создать</button>
+        <form onSubmit={handleSubmit}>
+            <div className='group-details-create'>
+                <div className='input-box-create'>
+                    <span className='details-create'>Название группы</span>
+                    <input 
+                        type='text' 
+                        placeholder='Введите название группы' 
+                        value={name}
+                        onChange={(e)=>(setName(e.target.value))}
+                    />
+                </div>
+            </div>
+
+            <div className='button-create'>
+                <button>Создать</button>
+            </div>
         </form>
+        
       </div>
     </div>
   )

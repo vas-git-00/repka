@@ -42,8 +42,8 @@ const useUserStore = create(
       },
 
       //Создание нового пользователя
-      createUser: async (name, lastName, email, password, token) => {
-        const { data } = await axios.post('http://localhost:8800/api/user', {name, lastName, email, password}, {
+      createUser: async (name, lastName, email, password, selectedRoleId, token) => {
+        const { data } = await axios.post('http://localhost:8800/api/user', {name, lastName, email, password, selectedRoleId}, {
           headers: {
             Authorization: `Bearer ${token}`
           }

@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser'
 import { authRouter } from './routes/authRoute.js'
 import { userRouter } from './routes/userRoute.js'
 import { groupRouter } from './routes/groupRoute.js'
+import { roleRouter } from './routes/roleRoute.js'
 
 const app = express()
 
@@ -18,6 +19,7 @@ app.use(cookieParser())
 app.use('/api', authRouter)
 app.use('/api', userRouter)
 app.use('/api', groupRouter)
+app.use('/api', roleRouter)
 
 //Запуск сервера
 app.listen(8800, () => {

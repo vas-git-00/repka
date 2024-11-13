@@ -51,18 +51,7 @@ export default function GroupSingle() {
       <div className="groupsInfo">
         <h1>Группа: {dataGroup.name}</h1>
       </div>
-
-      <div className='groupsAddUserToGroup'>
-        <p>Добавить пользователя в группу</p>
-        <select onChange={(e) => setSelectedUserId(e.target.value)} value={selectedUserId}>
-          <option value="">Выберите пользователя</option>
-          {dataUsersFreeForGroup.map((user) => (
-            <option key={user.id} value={user.id}>{user.name} {user.last_name}</option>
-          ))}
-        </select>
-        <button onClick={handleClickAddToGroup}>Добавить в группу</button>
-      </div>
-
+<div className='groupsCol'>
       <div className='groupsTableContainer'>
         <table className="rtable">
           <thead>
@@ -93,6 +82,23 @@ export default function GroupSingle() {
         </table>
       </div>
   
+      <div className='groupsAddUserToGroup'>
+        <p>Добавить пользователя в группу</p>
+        <select onChange={(e) => setSelectedUserId(e.target.value)} value={selectedUserId}>
+          <option value="">Выберите пользователя</option>
+          {dataUsersFreeForGroup.map((user) => (
+            <option key={user.id} value={user.id}>{user.name} {user.last_name}</option>
+          ))}
+        </select>
+        {selectedUserId 
+          ? 
+          <button onClick={handleClickAddToGroup}>Добавить в группу</button>
+          :
+          <button disabled onClick={handleClickAddToGroup}>Добавить в группу</button>  
+        }
+      </div>
+</div>
+
     </div>
   )
 }

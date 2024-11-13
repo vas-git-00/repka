@@ -8,7 +8,6 @@ export default function UserSingle() {
   const { token } = useAuthStore()
   const { getUser, dataUser } = useUserStore()
   const { id } = useParams()
-
   
   useEffect(() => {
     getUser(id, token)
@@ -30,6 +29,8 @@ export default function UserSingle() {
               <th>Имя</th>
               <th>Фамилия</th>
               <th>Email</th>
+              <th>Роль</th>
+              <th>Активный</th>
             </tr>
           </thead>
           <tbody>
@@ -39,6 +40,8 @@ export default function UserSingle() {
                 <td>{dataUser.name}</td>
                 <td>{dataUser.last_name}</td>
                 <td>{dataUser.email}</td>
+                <td>{dataUser.role_name}</td>
+                <td>{dataUser.is_active ? 'Да' : 'Нет'}</td>
               </tr>
           </tbody>
         </table>

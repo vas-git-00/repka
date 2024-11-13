@@ -7,7 +7,7 @@ export const registration = (req, res) => {
     const { company_name, name, last_name, email, password } = req.body
 
 
-    const q = 'SELECT * FROM `users` WHERE `email` = ?'
+    const q = 'SELECT * FROM `users` WHERE `email` = ?' 
     const values = [email]
     db.query(q, values, (err, data) => {
         if (err) {
@@ -27,8 +27,8 @@ export const registration = (req, res) => {
                     const salt = bcrypt.genSaltSync(10)
                     const hashPassword = bcrypt.hashSync(password, salt)
 
-                    const q = 'INSERT INTO `users` (`company_id`, `name`, `last_name`, `email`, `password`) VALUES (?, ?, ?, ?, ?)'
-                    const values = [data.insertId, name, last_name, email, hashPassword]
+                    const q = 'INSERT INTO `users` (`company_id`, `name`, `last_name`, `email`, `password`, `role_id`) VALUES (?, ?, ?, ?, ?, ?)'
+                    const values = [data.insertId, name, last_name, email, hashPassword, 1]
                    
                     db.query(q, values, (err, data) => {
                         if (err) {
@@ -51,21 +51,26 @@ export const login = (req, res) => {
                         u.last_name,
                         u.email,
                         u.password,
-                        u.company_id, 
-                        c.name
+                        u.company_id,
+                        u.role_id,
+                        u.is_active, 
+                        c.name AS comany_name,
+                        r.role_name
                     FROM 
                         users u
                     JOIN 
                         companys c ON u.company_id = c.id
+                    JOIN    
+                        roles r ON u.role_id = r.id
                     WHERE 
-                        u.email = ?`
+                        u.email = ?  AND u.is_active = 1`
     const values = [email]
     db.query(q, values, (err, data) => {
         if (err) {
             return res.status(500).json({message: err})
         }
         if (data.length === 0) { 
-            return res.status(404).json({message: "Пользователь не найден!"})
+            return res.status(404).json({message: "Пользователь не найден или отключен!"})
         }
 
         const isCorrectPassword = bcrypt.compareSync(password, data[0].password)
@@ -74,7 +79,7 @@ export const login = (req, res) => {
             return res.status(400).json({message: "Введен неверный email или пароль!"})
         }
 
-        const token = jwt.sign({user_id: data[0].id, company_id: data[0].company_id}, "secretkey", {expiresIn: '30d'})
+        const token = jwt.sign({user_id: data[0].id, company_id: data[0].company_id, role_id: data[0].role_id}, "secretkey", {expiresIn: '30d'})
 
         return res.status(200).json({
             userData: data[0],
@@ -87,10 +92,6 @@ export const login = (req, res) => {
 
 export const authMe = (req, res) => {
         const id = req.userId
-        //const q = 'SELECT * FROM `users` WHERE `id` = ?'
-        //const q = `SELECT users.id AS user_id, users.email AS user_email, users.name AS user_name, users.last_name AS user_last_name, company.id AS company_id, company.company AS company_name
-        //           FROM default_db.users
-        //           JOIN default_db.company ON users.company_id = company.id`
         const q = `SELECT 
                         u.id,
                         u.name,

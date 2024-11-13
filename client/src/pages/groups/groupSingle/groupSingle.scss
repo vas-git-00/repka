@@ -1,7 +1,7 @@
 @import "../../../styles/variables.scss";
 
 .groupSingle{
-
+  
     .groupsInfo{
       display: flex;
       align-items: center;
@@ -17,67 +17,87 @@
         cursor: pointer;
       }
     }
-  }
-
-  .groupsAddUserToGroup {
-    display: flex;
-    gap: 10px;
-    flex-direction: column;
-    width: 300px;
-    margin-bottom: 20px;
-  }
-
-  .rtable {
-    display: inline-block;
-    vertical-align: top;
-    max-width: 100%;
+  
+    .groupsCol{
+      display: flex;
+      justify-content: space-between;
     
-    overflow-x: auto;
-    
-    white-space: nowrap;
-  
-    border-collapse: collapse;
-    border-spacing: 0;
-  }
-  
-  .rtable {
-    // optional - enable iOS momentum scrolling
-    -webkit-overflow-scrolling: touch;
-    
-    background-size: 10px 100%, 10px 100%;
-    background-attachment: scroll, scroll;
-    background-repeat: no-repeat;
-  }
 
-  .rtable th {
-    font-size: 12px;
-    text-align: left;
-    text-transform: uppercase;
-  }
+      .groupsAddUserToGroup {
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+        width: 300px;
+        margin-right: 20%;
+          
+          select {
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            border-radius: 2px;    
+            height: 30px;
+            padding: 5px;
+          }
+
+          button {
+            height: 30px;
+          }
+      }
+
+      .groupsTableContainer{
+        .rtable {
+          display: inline-block;
+          vertical-align: top;
+          max-width: 100%;
+          
+          overflow-x: auto;
+          
+          white-space: nowrap;
+        
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        
+        .rtable {
+          // optional - enable iOS momentum scrolling
+          -webkit-overflow-scrolling: touch;
+          
+          background-size: 10px 100%, 10px 100%;
+          background-attachment: scroll, scroll;
+          background-repeat: no-repeat;
+        }
+      
+        .rtable th {
+          font-size: 12px;
+          text-align: left;
+          text-transform: uppercase;
+        }
+        
+        .rtable th,
+        .rtable td {
+          padding: 6px 12px;
+          text-align: center;
+          border: 1px solid #d9d7ce;
+        }
+      
+        .groupsActions {
+          display: flex;
+          justify-content: center;
+          gap: 10px;
+        }
+      
+        .groupsActionsItem {
+          display: flex;
+          align-items: center;
+        }
+      
+        .groupsActionsDelete {
+          color:rgb(179, 0, 0);
+        }
+        .groupsActionsDelete:hover, .groupsActionsEdit:hover {
+          background-color: $soft-bg;
+        }
+      } 
+    }
+
+}
   
-  .rtable th,
-  .rtable td {
-    padding: 6px 12px;
-    text-align: center;
-    border: 1px solid #d9d7ce;
-  }
-
-  .groupsActions {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .groupsActionsItem {
-    display: flex;
-    align-items: center;
-  }
-
-  .groupsActionsDelete {
-    color:rgb(179, 0, 0);
-  }
-  .groupsActionsDelete:hover, .groupsActionsEdit:hover {
-    background-color: $soft-bg;
-  }
-  
- 

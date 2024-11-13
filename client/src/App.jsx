@@ -1,5 +1,8 @@
 import './styles/global.scss'
 import { Routes, Route, Outlet } from 'react-router-dom'
+import { jwtDecode } from 'jwt-decode'
+import useAuthStore from './store/authStore'
+
 import Navbar from './components/navbar/Navbar'
 import Menu from './components/menu/Menu'
 import Home from './pages/home/Home'
@@ -22,9 +25,8 @@ import RequireAuth from './hok/RequireAuth'
 
 
 
-
 function App() {
-  
+
   
   const Layout = () => {
     return (
@@ -57,7 +59,7 @@ function App() {
 
           <Route path='users' element={ <RequireAuth> <Users /> </RequireAuth>} />
           <Route path='users/:id' element={ <RequireAuth> <UserSingle /> </RequireAuth> } />
-          <Route path='users/new' element={ <RequireAuth> <UserCreate /> </RequireAuth>} />
+          <Route path='users/new' element={ <RequireAuth> <UserCreate />  </RequireAuth>} />
 
           <Route path='groups' element={ <RequireAuth> <Groups /> </RequireAuth>} /> 
           <Route path='groups/:id' element={ <RequireAuth> <GroupSingle /> </RequireAuth> } />

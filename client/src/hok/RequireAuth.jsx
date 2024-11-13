@@ -8,6 +8,7 @@ export default function RequireAuth({children}) {
     if (!isAuthenticated) {
       return <Navigate to="/auth" />  // Перенаправляем на страницу авторизации, если токен отсутствует
     }
+    
   
     return children;
     
