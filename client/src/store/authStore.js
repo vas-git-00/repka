@@ -1,5 +1,6 @@
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
+import { URI_BACKEND } from "../utils/config";
 import axios from 'axios'
 
 const useAuthStore = create(
@@ -15,7 +16,7 @@ const useAuthStore = create(
       // Функция входа в аккаунт
       login: async (email, password) => {
         try {
-          const { data } = await axios.post('http://localhost:8800/api/login', {email, password})
+          const { data } = await axios.post(`${URI_BACKEND}/api/login`, {email, password})
 
             if ( data ) {
                 set({ 

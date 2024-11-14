@@ -1,5 +1,6 @@
 import { create } from "zustand"
 import axios from 'axios'
+import { URI_BACKEND } from "../utils/config"
 
 const useUserStore = create(
     (set) => ({
@@ -9,7 +10,7 @@ const useUserStore = create(
 
       //Получение списка пользователей
       getUsers: async (token) => {
-        const { data } = await axios.get('http://localhost:8800/api/users', {
+        const { data } = await axios.get(`${URI_BACKEND}/api/users`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -26,7 +27,7 @@ const useUserStore = create(
 
       //Получение пользователя по ID
       getUser: async (id, token) => {
-        const { data } = await axios.get(`http://localhost:8800/api/user/${id}`, {
+        const { data } = await axios.get(`${URI_BACKEND}/api/user/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -43,7 +44,7 @@ const useUserStore = create(
 
       //Создание нового пользователя
       createUser: async (name, lastName, email, password, selectedRoleId, token) => {
-        const { data } = await axios.post('http://localhost:8800/api/user', {name, lastName, email, password, selectedRoleId}, {
+        const { data } = await axios.post(`${URI_BACKEND}/api/user`, {name, lastName, email, password, selectedRoleId}, {
           headers: {
             Authorization: `Bearer ${token}`
           }

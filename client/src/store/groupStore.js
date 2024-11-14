@@ -1,5 +1,6 @@
 import { create } from "zustand"
 import axios from 'axios'
+import { URI_BACKEND } from "../utils/config"
 
 const useGroupStore = create(
     (set) => ({
@@ -11,7 +12,7 @@ const useGroupStore = create(
 
       //Получение списка групп
       getGroups: async (token) => {
-        const { data } = await axios.get('http://localhost:8800/api/groups', {
+        const { data } = await axios.get(`${URI_BACKEND}/api/groups`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -28,7 +29,7 @@ const useGroupStore = create(
 
       //Получение группы по ID
       getGroup: async (id, token) => {
-        const { data } = await axios.get(`http://localhost:8800/api/group/${id}`, {
+        const { data } = await axios.get(`${URI_BACKEND}/api/group/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -45,7 +46,7 @@ const useGroupStore = create(
 
       //Создание новой группы
       createGroup: async (name, token) => {
-        const { data } = await axios.post('http://localhost:8800/api/group', {name}, {
+        const { data } = await axios.post(`${URI_BACKEND}/api/group`, {name}, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -58,7 +59,7 @@ const useGroupStore = create(
 
       //Удаление группы 
       deleteGroup: async (groupId, token) => {
-        await axios.delete('http://localhost:8800/api/group', {
+        await axios.delete(`${URI_BACKEND}/api/group`, {
           headers: {
             Authorization: `Bearer ${token}`
           },
@@ -70,7 +71,7 @@ const useGroupStore = create(
 
       //Добавление в группу пользователя
       addUserToGroup: async (userId, groupId, token) => {
-        const { data } = await axios.post('http://localhost:8800/api/users-group', {userId, groupId}, {
+        const { data } = await axios.post(`${URI_BACKEND}/api/users-group`, {userId, groupId}, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -83,7 +84,7 @@ const useGroupStore = create(
 
       //Получение всех пользователей, которые находяться в группе
       getUsersInGroup: async (id, token) => {
-        const { data } = await axios.get(`http://localhost:8800/api/users-group/${id}`, {
+        const { data } = await axios.get(`${URI_BACKEND}/api/users-group/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -100,7 +101,7 @@ const useGroupStore = create(
 
       //Удаление пользователя из группы
       deleteUserFromGroup: async (userId, groupId, token) => {
-        await axios.delete('http://localhost:8800/api/users-group', {
+        await axios.delete(`${URI_BACKEND}/api/users-group`, {
           headers: {
             Authorization: `Bearer ${token}`
           },
@@ -114,7 +115,7 @@ const useGroupStore = create(
 
       //Получение всех пользователей, которые еще не находятся в группе deleteUserFromGroup
       getUsersFreeForGroup: async (id, token) => {
-        const { data } = await axios.get(`http://localhost:8800/api/users-group/${id}/available-users`, {
+        const { data } = await axios.get(`${URI_BACKEND}/api/users-group/${id}/available-users`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
