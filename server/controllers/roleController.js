@@ -4,7 +4,7 @@ export const getRoles = (req, res) => {
   //const companyId = req.companyId
 
   const q = 'SELECT * FROM roles'
-  //const values = [companyId]
+  //const values = [companyId] ДЛЯ ТЕСТА КОММИТА!!!
   db.query(q, (err, data) => {
       if (err) {
           return res.status(500).json(err)
