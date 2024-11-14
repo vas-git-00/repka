@@ -1,4 +1,3 @@
-@import '../../../styles/variables.scss';
 
 .userSingle{
 
@@ -69,5 +68,5 @@
     color:rgb(179, 0, 0);
   }
   .usersActionsDelete:hover, .usersActionsEdit:hover {
-    background-color: $soft-bg;
+    background-color: #384256;
   }

@@ -6,21 +6,17 @@ export default defineConfig({
 
   plugins: [react()],
   
-  resolve: {
+  /*resolve: {
     alias: {
       'sass': 'sass-embedded',
     },
-  },
+  },*/
   
   css: {
     preprocessorOptions: {
       scss: {
-        silenceDeprecations: ["legacy-js-api"],
-        //additionalData: `
-        //  @import "src/styles/variables.scss";
-        //  @import "src/styles/global.scss";
-        //  @import "src/styles/responsive.scss";
-        //`
+        api: 'modern-compiler',
+        //silenceDeprecations: ["legacy-js-api"],
       },
     },
   },

@@ -1,5 +1,3 @@
-@import "../../styles/variables.scss";
-@import "../../styles/responsive.scss";
 
 .menu {
   .item {
@@ -11,12 +9,10 @@
     .title {
       font-size: 10px;
       font-weight: 200;
-      color: $soft-color;
+      color: #ddd;
       text-transform: uppercase;
 
-      @include lg{
-        display: none;
-      }
+      
     }
 
     .listItem {
@@ -28,11 +24,11 @@
       border-radius: 5px;
 
       &:hover {
-        background-color: $soft-bg;
+        background-color: #384256;
       }
 
       &.active {
-        background-color: $soft-bg;
+        background-color: #384256;
       }
 
         img {
@@ -41,9 +37,7 @@
         }
 
         .listItemTitle{
-          @include lg{
-            display: none;
-          }
+          
       }
     }
   }
